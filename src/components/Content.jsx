@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 
 import {
   Tabs,
@@ -10,6 +10,8 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 
+import CallDetailDialog from "@/components/CallDetailDialog";
+
 import {
   getFormattedDate,
   formatDuration,
@@ -18,25 +20,13 @@ import {
 } from "@/utils/index";
 import { contacts } from "@/utils/contacts";
 
-const data = [
-  {
-    label: "Recent",
-    value: "recent",
-    desc: `It really matters and then like it really doesn't matter.
-      What matters is the people who are sparked by it. And the people 
-      who are like offended by it, it doesn't matter.`,
-  },
-  {
-    label: "Archived",
-    value: "archived",
-    desc: `Because it's about motivating the doers. Because I'm here
-      to follow my dreams and inspire other people to follow their dreams, too.`,
-  },
-];
-
 function Content({ allCalls }) {
+  const [callDetailId, setCallDetailId] = useState(null);
   const [openCallDetail, setOpenCallDetail] = useState(false);
-  const closeDrawer = () => setOpenCallDetail(false);
+  const handleOpenModal = (id) => {
+    setCallDetailId(id);
+    setOpenCallDetail(!openCallDetail);
+  };
 
   const isDataEmpty =
     !Array.isArray(allCalls) || allCalls.length < 1 || !allCalls;
@@ -56,10 +46,7 @@ function Content({ allCalls }) {
           {!isDataEmpty ? (
             <>
               <TabPanel key={"recent"} value={"recent"}>
-                <div
-                  className="grid grid-cols-1 cursor-pointer"
-                  // onClick={() => setOpenCallDetail(true)}
-                >
+                <div className="grid grid-cols-1 cursor-pointer">
                   {allCalls
                     .filter((callEntry) => !callEntry.is_archived)
                     .map((callEntry) => {
@@ -73,7 +60,11 @@ function Content({ allCalls }) {
                       );
 
                       return (
-                        <div key={callEntry.id} className="pb-4">
+                        <div
+                          key={callEntry.id}
+                          className="mb-4"
+                          onClick={() => handleOpenModal(callEntry.id)}
+                        >
                           <div className="flex h-[75px] bg-white shadow-md  rounded-2xl p-2 items-center">
                             <div className="min-w-[48px] min-h-[48px] rounded-full inline-flex justify-center items-center bg-[#7B2CFE] text-white font-bold">
                               {callerName.toString().charAt(0).toUpperCase()}
@@ -122,10 +113,12 @@ function Content({ allCalls }) {
                         contacts
                       );
 
-                      console.log(callerName);
-
                       return (
-                        <div key={callEntry.id} className="pb-4">
+                        <div
+                          key={callEntry.id}
+                          className="mb-4"
+                          onClick={() => handleOpenModal(callEntry.id)}
+                        >
                           <div className="flex h-[75px] bg-white shadow-md  rounded-2xl p-2 items-center">
                             <div className="min-w-[48px] min-h-[48px] rounded-full inline-flex justify-center items-center bg-[#7B2CFE] text-white font-bold">
                               {callerName.toString().charAt(0).toUpperCase()}
@@ -167,6 +160,12 @@ function Content({ allCalls }) {
           )}
         </TabsBody>
       </Tabs>
+      <CallDetailDialog
+        id={callDetailId}
+        open={openCallDetail}
+        setOpenCallDetail={setOpenCallDetail}
+        handleOpenModal={handleOpenModal}
+      />
     </div>
   );
 }

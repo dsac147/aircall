@@ -12,6 +12,24 @@ export async function fetchCalls() {
       throw new Error(`${response.status} ${response.statusText}`);
     }
     const result = await response.json();
+    return result.reverse();
+  } catch (error) {
+    return { message: `${error}` };
+  }
+}
+
+export async function fetchCallDetail(id) {
+  try {
+    if (id === null) {
+      throw new Error(`Empty Id`);
+    }
+    const response = await fetch(
+      `https://cerulean-marlin-wig.cyclic.app/activities/${id}`
+    );
+    if (!response.ok) {
+      throw new Error(`${response.status} ${response.statusText}`);
+    }
+    const result = await response.json();
     console.log(result);
     return result;
   } catch (error) {
@@ -20,20 +38,6 @@ export async function fetchCalls() {
 }
 
 export const getFormattedDate = (callDate) => {
-  // let dt, month;
-  // const date = new Date(callDate);
-  // const year = date.getFullYear();
-  // month = date.getMonth() + 1;
-  // dt = date.getDate();
-
-  // if (dt < 10) {
-  //   dt = `0${dt}`;
-  // }
-  // if (month < 10) {
-  //   month = `0${month}`;
-  // }
-
-  // return dt + "-" + month + "-" + year;
   return dayjs(callDate).fromNow();
 };
 
@@ -61,12 +65,12 @@ export const getContactName = (direction, from, to, contacs) => {
   }
 };
 
-export const getCallIcon = (direction, callType) => {
+export const getCallIcon = (direction, callType, size) => {
   if (direction === "outbound") {
     return (
       <svg
-        width="30px"
-        height="30px"
+        width={size ?? "30px"}
+        height={size ?? "30px"}
         viewBox="0 -0.5 25 25"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -102,8 +106,8 @@ export const getCallIcon = (direction, callType) => {
   if (callType === "missed") {
     return (
       <svg
-        width="30px"
-        height="30px"
+        width={size ?? "30px"}
+        height={size ?? "30px"}
         viewBox="0 -0.5 25 25"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -139,8 +143,8 @@ export const getCallIcon = (direction, callType) => {
   if (direction === "inbound") {
     return (
       <svg
-        width="30px"
-        height="30px"
+        width={size ?? "30px"}
+        height={size ?? "30px"}
         viewBox="0 -0.5 25 25"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -174,8 +178,8 @@ export const getCallIcon = (direction, callType) => {
   }
   return (
     <svg
-      width="30px"
-      height="30px"
+      width={size ?? "30px"}
+      height={size ?? "30px"}
       viewBox="0 -0.5 25 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

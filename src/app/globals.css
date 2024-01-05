@@ -25,3 +25,20 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* size according to our needs */
+.modal {
+  /* margin-top: 244px; */
+  width: 376px!important;
+  min-width: 376px!important;
+  max-width: 376px!important;
+  height: 310px!important;
+  min-height: 310px!important;
+  max-height: 310px!important;
+}
+
+/* hide modal overlay */
+.backdrop-blur-sm {
+  background-color: transparent;
+  --tw-backdrop-blur : none;
+}

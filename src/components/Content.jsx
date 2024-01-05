@@ -8,6 +8,7 @@ import {
   TabsBody,
   Tab,
   TabPanel,
+  Button,
 } from "@material-tailwind/react";
 
 import CallDetailDialog from "@/components/CallDetailDialog";
@@ -31,10 +32,55 @@ function Content({ allCalls }) {
   const isDataEmpty =
     !Array.isArray(allCalls) || allCalls.length < 1 || !allCalls;
 
+  const handleArchiveAll = (allCalls) => {
+    const unArchivedIds = allCalls.filter(
+      (callEntry) => !callEntry.is_archived
+    );
+    if (unArchivedIds) {
+      Promise.all(
+        unArchivedIds.map((call) => {
+          fetch(
+            `https://cerulean-marlin-wig.cyclic.app/activities/${call.id}`,
+            {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              method: "PATCH",
+              body: JSON.stringify({
+                is_archived: true,
+              }),
+            }
+          )
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch((error) => console.log(error));
+        })
+      );
+    }
+  };
+
+  const handleUnArchiveAll = () => {
+    fetch(`https://cerulean-marlin-wig.cyclic.app/reset`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "PATCH",
+
+      body: JSON.stringify({
+        is_archived: false,
+      }),
+    }).then(function (response) {
+      return;
+    });
+  };
+
   return (
     <div className="h-[600px] p-3 space-y-4  overflow-scroll z-[9999]">
       <Tabs value="recent" className="w-full">
-        <TabsHeader className="max-w-[150px] mx-auto  text-xs">
+        <TabsHeader className="max-w-[150px] mx-auto text-xs">
           <Tab key={"recent"} value={"recent"}>
             Recent
           </Tab>
@@ -47,6 +93,14 @@ function Content({ allCalls }) {
             <>
               <TabPanel key={"recent"} value={"recent"}>
                 <div className="grid grid-cols-1 cursor-pointer">
+                  <Button
+                    variant="gradient"
+                    color={"red"}
+                    className="mb-4"
+                    onClick={() => handleArchiveAll(allCalls)}
+                  >
+                    <span>Archive all</span>
+                  </Button>
                   {allCalls
                     .filter((callEntry) => !callEntry.is_archived)
                     .map((callEntry) => {
@@ -99,6 +153,17 @@ function Content({ allCalls }) {
                 </div>
               </TabPanel>
               <TabPanel key={"archived"} value={"archived"}>
+                <div className="grid grid-cols-1 cursor-pointer">
+                  <Button
+                    variant="gradient"
+                    color={"green"}
+                    className="mb-4"
+                    onClick={() => handleUnArchiveAll()}
+                  >
+                    <span>Unarchive all</span>
+                  </Button>
+                </div>
+
                 {allCalls.filter((callEntry) => callEntry.is_archived).length >
                 0 ? (
                   allCalls

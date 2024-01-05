@@ -16,7 +16,10 @@ export default async function Home() {
       }}
     >
       <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
-      <div className="w-full sm:w-6/12 lg:w-4/12 xl:w-4/12  overflow-y-scroll space-y-3 border-8 rounded-3xl bg-white border-gray-800 shadow-2xl z-10">
+      <div
+        id="mobile-container"
+        className="w-full sm:w-6/12 lg:w-4/12 xl:w-4/12  overflow-y-scroll space-y-3 border-8 rounded-3xl bg-white border-gray-800 shadow-2xl z-10"
+      >
         <TopNav />
         <Content allCalls={allCalls} />
         <BottomNav />

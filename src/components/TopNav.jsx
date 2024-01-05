@@ -25,13 +25,6 @@ function TopNav() {
         <h4 className="text-white text-xl font-semibold  leading-tight truncate">
           Call History
         </h4>
-        <div className="flex justify-between items-center ">
-          <div className="flex flex-col">
-            <h2 className="text-sm flex items-center text-gray-100 font-normal">
-              Massive Dynamic
-            </h2>
-          </div>
-        </div>
       </div>
       {/* Search */}
       {/* <div className="flex items-center justify-between mt-3 px-3 z-10">

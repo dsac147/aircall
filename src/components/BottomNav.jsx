@@ -2,7 +2,7 @@ import React from "react";
 
 function BottomNav() {
   return (
-    <div className="sticky bottom-2  p-5 px-6 m-2   flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer">
+    <div className="sticky bottom-2  p-5 px-6 m-2 z-10 flex items-center justify-between   bg-gray-900 shadow-3xl text-gray-400 rounded-2xl cursor-pointer">
       <div className="flex flex-col items-center transition ease-in duration-200 hover:text-blue-400 ">
         History
       </div>

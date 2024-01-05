@@ -23,22 +23,9 @@ function TopNav() {
       {/* Top */}
       <div className="px-3 pt-12 rounded-lg  flex flex-col w-full">
         <h4 className="text-white text-xl font-semibold  leading-tight truncate">
-          Call History
+          Aircall History
         </h4>
       </div>
-      {/* Search */}
-      {/* <div className="flex items-center justify-between mt-3 px-3 z-10">
-            <div className="relative w-full">
-              <input
-                type="text"
-                className="bg-purple-white shadow rounded-xl border-0 p-3 w-full"
-                placeholder="Search somthing..."
-              />
-              <div className="absolute top-0 right-0 p-4 pr-3 text-purple-lighter">
-                H
-              </div>
-            </div>
-          </div> */}
     </div>
   );
 }

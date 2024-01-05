@@ -4,7 +4,7 @@ import {
   Dialog,
   DialogHeader,
   DialogBody,
-  DialogFooter,
+  Spinner,
 } from "@material-tailwind/react";
 
 import { contacts } from "@/utils/contacts";
@@ -58,7 +58,7 @@ function CallDetailDialog({ id, open, handleOpenModal, setOpenCallDetail }) {
     >
       {isLoading && !data ? (
         <div className="flex justify-center items-center min-h-[160px]">
-          <div>Loading...</div>
+          <Spinner />
         </div>
       ) : (
         <>
